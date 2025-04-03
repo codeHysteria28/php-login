@@ -13,6 +13,7 @@
             <li><a href="about.php">About</a></li>
             <li><a href="contacts.php">Contact</a></li>
             <li><a href="login.php">Login</a></li>
+              <li><a href="register.php">Register</a></li>
           </ul>
         </nav>
         <h3 class="text-muted">PHP Login exercise - Home page</h3>

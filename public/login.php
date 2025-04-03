@@ -1,5 +1,5 @@
 <?php
-require_once('config.php');
+require_once('../src/config.php');
 session_start()
 ?>
 <!DOCTYPE html>
@@ -31,16 +31,26 @@ session_start()
 
     </form>
     <?php
-
+    require '../src/sanitize.php';
     if(isset($_POST['Submit'])){
-        if(($_POST['Username'] == $Username) && ($_POST['Password'] == $Password)){
-            $_SESSION['Username'] = $Username;
+        require_once '../src/DbConnection.php';
+
+        $username = sanitize($_POST['Username']);
+        $password = sanitize($_POST['Password']);
+
+        $sql = "SELECT * FROM users WHERE username = :username";
+        $statement = $connection->prepare($sql);
+        $statement->bindParam(':username', $username);
+        $statement->execute();
+        $user = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if($user && password_verify($password, $user['password'])){
+            $_SESSION['Username'] = $user['username'];
             $_SESSION['Active'] = true;
-            header("location: index.php");
+            header('Location: index.php');
             exit();
-        }else {
+        }else
             echo "Incorrect username or password";
-        }
     }
 
     ?>
