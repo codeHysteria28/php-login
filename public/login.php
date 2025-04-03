@@ -1,6 +1,6 @@
 <?php
 require_once('../template/header.php');
-require_once __DIR__ . '/config.php';
+require_once('config.php');
 ?>
 <link rel="stylesheet" type="text/css" href="../css/signin.css">
     <title>Sign in</title>
@@ -28,6 +28,8 @@ require_once __DIR__ . '/config.php';
     if(isset($_POST['Submit'])){
         if(($_POST['Username'] == $Username) && ($_POST['Password'] == $Password)){
             echo "Success";
+
+            $_SESSION['Username'] = $Username;
         }else {
             echo "Incorrect username or password";
         }
